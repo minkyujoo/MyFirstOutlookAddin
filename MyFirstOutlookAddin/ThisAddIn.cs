@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 using Outlook = Microsoft.Office.Interop.Outlook;
-using Office = Microsoft.Office.Core;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace MailReceivedEvent
 {
     public partial class ThisAddIn
     {
+        Outlook.NameSpace outlookNameSpace;
+        Outlook.MAPIFolder inbox;
         Outlook.Items items;
+
         MailAIIntent ai = new MailAIIntent();
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            outlookNameSpace = this.Application.GetNamespace("MAPI");
+            inbox = outlookNameSpace.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox);
+            items = inbox.Items;
+
             items.ItemAdd += new Outlook.ItemsEvents_ItemAddEventHandler(items_ItemAdd);
         }
 
         private void items_ItemAdd(object Item)
         {
+
             Outlook.MailItem mail = (Outlook.MailItem)Item;
 
             string subject = mail.Subject;
