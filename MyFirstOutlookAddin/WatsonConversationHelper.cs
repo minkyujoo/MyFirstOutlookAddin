@@ -76,7 +76,7 @@ namespace MailReceivedEvent
             //stream ==> string 변환
             string strResult = srReadData.ReadToEnd();
 
-            MailReceivedEvent.AibrilResponseClass.RootObject responseToJson = JsonConvert.DeserializeObject<MailReceivedEvent.AibrilResponseClass.RootObject>(strResult);
+            AibrilResponseClass.RootObject responseToJson = JsonConvert.DeserializeObject<AibrilResponseClass.RootObject>(strResult);
 
             string intent = responseToJson.intents[0].intent;
             decimal confidence = responseToJson.intents[0].confidence;
@@ -86,8 +86,10 @@ namespace MailReceivedEvent
 
         internal string GetAibrilResponse(string sentence)
         {
+            // 입력 값들은 나중에 받아
             return GetAibrilResponse("76a465cb-b18a-43a0-9fd3-bf23b516a9c3", "8aa89312-8388-411a-bb59-3c5a097d398e", "TodLttJ1ikx7", sentence);
         }
+
     }
 }
 

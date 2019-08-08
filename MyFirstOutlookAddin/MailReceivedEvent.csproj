@@ -181,7 +181,8 @@
   -->
   <ItemGroup>
     <Compile Include="AibrilResponseClass.cs" />
-    <Compile Include="MailIntent.cs" />
+    <Compile Include="IntentEntity.cs" />
+    <Compile Include="MailAIIntent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -216,6 +217,9 @@
       <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
