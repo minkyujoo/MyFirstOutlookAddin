@@ -17,28 +17,33 @@ namespace MailReceivedEvent
             outlookNameSpace = this.Application.GetNamespace("MAPI");
             inbox = outlookNameSpace.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox);
             items = inbox.Items;
-
             items.ItemAdd += new Outlook.ItemsEvents_ItemAddEventHandler(items_ItemAdd);
         }
 
         private void items_ItemAdd(object Item)
         {
-
-            Outlook.MailItem mail = (Outlook.MailItem)Item;
-
+            Microsoft.Office.Interop.Outlook.MailItem mail = (Microsoft.Office.Interop.Outlook.MailItem) Item;
+            //var mail = (Outlook.OlItemType.olMailItem)Item;
             string subject = mail.Subject;
+
+            //mail.BodyFormat = Outlook.OlBodyFormat.olFormatPlain;
+            // MailItem에서 Body를 못 가져옵니다. // Office 2016 pro plus의 오류. ㅜㅡ; ****
             string body = mail.Body;
             string realBody = string.Empty;
-
             realBody = ai.GetRealBody(body);
 
-            string strTemp = ai.GetMailIent(subject, body);
+            string strTemp = ai.GetMailIent(subject, realBody);
             if (!String.IsNullOrEmpty(strTemp))
             {
                 mail.FlagStatus = Outlook.OlFlagStatus.olFlagMarked; 
                 mail.Importance = Outlook.OlImportance.olImportanceHigh;
                 mail.Categories = strTemp;
                 mail.Save();
+
+                // 여기서 좀 더 확장가능
+                // Reqeust: To-do에 등록
+                // Meeting Request: 일정에 등록 또는 "일정확정" 으로 to-do에 등록. 
+                // Reply: 
             }
         }
 

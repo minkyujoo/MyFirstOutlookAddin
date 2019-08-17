@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MailReceivedEvent
 {
@@ -137,8 +138,10 @@ namespace MailReceivedEvent
             realBody = realBody.Replace("\r\n\r\n", "\r\n");
             realBody = realBody.Replace("   ", " ");
             realBody = realBody.Replace("  ", " ");
-            string[] arrSentences = realBody.Split("\r\n".ToCharArray());
 
+            string[] arrSentences = realBody.Split("\r\n".ToCharArray());
+            //string[] arrSentences = Regex.Split(realBody, @"(?<=[\.!\?])\s+");
+            
             string strTemp = string.Empty;
             for (int i = 0; i < arrSentences.Length; i++)
             {
